@@ -8,20 +8,25 @@ host = sys.argv[1]
 port = int(sys.argv[2])
 
 s.connect((host, port))
-open('clientinput.dat','w').close()
-lines = open('wordfile.txt').read().splitlines()
-file = open('clientinput.dat', 'a')
+# s.send(x.strip().encode())
+x = input("Do you want to Do? 1. view  2. edit 3. see all updated 4. exit")
+while( x != 4):
+    if (x == 1):
+        s.send("read")
+        data = s.recv(2048)
+        data_arr = json.dumps(data)
+        print(data_arr.replace("\\", ""))
 
-# Randomly generate 20 words from the line and store it into the array
+    if (x == 2):
+        s.send("write")
+        data = raw_input("Please enter what you want to update")
+        s.send(data.encode())
 
+    if (x == 3):
+        s.send("update")
+        data = s.recv(4098)
+        data_arr = json.dumps(data)
+        print(data_arr.replace("\\", ""))
+    x = input("Do you want to Do? 1. view  2. edit 3. see all updated 4. exit")
 
-
-# opening a file
-client_file = open('clientinput.dat').read().splitlines()
-for x in client_file:
-    time.sleep(2)
-    s.send(x.strip().encode())
-    data = s.recv(2048)
-    data_arr = json.dumps(data)
-    print(data_arr.replace("\\", ""))
 s.close()
