@@ -33,13 +33,11 @@ while True:
         while True:
 
             data = connection.recv(2049)
-            yo = "yo"
             if data == "read":
                 lines = open('wordfile.txt').read()
                 data1 = json.dumps(lines)
                 connection.send(data1)
-                yo = connection.recv(4098)
-            if data == "write" or yo == "write":
+            if data == "write":
                 lines = open('wordfile.txt', 'a')
                 change = connection.recv(4098)
                 client = MongoClient("mongodb://priyagup:Codepri%40143@advancedropboxproject-shard-00-00-jdfx8.mongodb.net:27017,advancedropboxproject-shard-00-01-jdfx8.mongodb.net:27017,advancedropboxproject-shard-00-02-jdfx8.mongodb.net:27017/test?ssl=true&replicaSet=AdvanceDropboxproject-shard-0&authSource=admin&retryWrites=true")
@@ -66,7 +64,8 @@ while True:
                     connection.send(arr.encode())
 
                 lines.close()
-            break
+            if data == "4":
+                break
             #
             # now = datetime.datetime.now()
             # lis = {"port": i, "Time": str(now)}
