@@ -60,8 +60,10 @@ while True:
                 col = db["History"]
                 for x in col.find():
                     print(x)
-                    print(x.encode())
-                    connection.send(x.encode())
+                    list_time = x.values()
+                    list_time.pop(0)
+                    arr = json.dumps(list_time)
+                    connection.send(arr.encode())
 
                 lines.close()
             break
